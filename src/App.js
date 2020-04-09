@@ -4,23 +4,23 @@ import ChipName from './ChipName';
 import './App.css';
 
 function App() {
-  let search = '';
-  const [searchPrint, setSearchPrint] = useState('')
+  const [searchTerm,setSearchTerm] = useState('')
   const names = ['dave', 'laura', 'steve', 'daniel', 'sara']
   const [namesFiltered, setNamesFiltered] = useState(names);
 
   const handleSearchBar = (e) => { 
-    search = e.target.value;
-    setSearchPrint(e.target.value);
-    console.log(search)
-    setNamesFiltered(names.filter((item) => item.toLowerCase().indexOf(search) !== -1));
+    setSearchTerm(e.target.value);
   }
+
+  useEffect(() => {
+    setNamesFiltered(names.filter((item) => item.toLowerCase().includes(searchTerm)));
+  }, [searchTerm])
   
 
   return (
     <div className="App">
-      <SearchBar handleSearchBar={handleSearchBar} />
-      <p>You searched for: {searchPrint}</p>
+      <SearchBar value={searchTerm} handleSearchBar={handleSearchBar} />
+      <p>You searched for: {searchTerm}</p>
 
       <div className="flex">
 
